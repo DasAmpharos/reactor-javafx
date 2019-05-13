@@ -1,0 +1,198 @@
+package io.github.dylmeadows.reaktorfx.observer
+
+import io.github.dylmeadows.reaktorfx.util.ErrorHandler
+import io.github.dylmeadows.reaktorfx.util.any
+import io.github.dylmeadows.reaktorfx.util.mock
+import io.github.dylmeadows.reaktorfx.util.whenever
+import javafx.beans.value.WritableDoubleValue
+import javafx.beans.value.WritableFloatValue
+import javafx.beans.value.WritableIntegerValue
+import javafx.beans.value.WritableLongValue
+import javafx.beans.value.WritableValue
+import org.junit.Assert.assertNotNull
+import org.junit.jupiter.api.Test
+import org.mockito.Mockito.eq
+import org.mockito.Mockito.times
+import org.mockito.Mockito.verify
+import reactor.core.Disposable
+import reactor.core.publisher.Mono
+import reactor.core.publisher.MonoProcessor
+import reactor.core.publisher.MonoSink
+
+class MonoTest {
+
+    @Test
+    fun `asBinding returns a new PublisherBinding`() {
+        val mono = mock<Mono<Any>>()
+        val disposable = mock<Disposable>()
+        whenever(mono.subscribe(any(), any())).thenReturn(disposable)
+
+        assertNotNull(mono.asBinding())
+    }
+
+    @Test
+    fun `feedTo with WritableValue invokes WritableValue#setValue when a value is emitted`() {
+        val value = mock<WritableValue<Any>>()
+        val mono = MonoProcessor.create<Any>()
+
+        mono.feedTo(value)
+        mono.onNext("abc")
+
+        verify(value, times(1))
+            .value = eq("abc")
+    }
+
+    @Test
+    fun `feedTo with WritableValue invokes onError when an error is emitted`() {
+        val value = mock<WritableValue<Any>>()
+        val onError = mock<ErrorHandler>()
+        val mono = MonoProcessor.create<Any>()
+        whenever(onError.invoke(any())).thenReturn(Unit)
+
+        mono.feedTo(value, onError)
+        mono.onError(Exception())
+
+        verify(onError, times(1))
+            .invoke(any())
+    }
+
+    @Test
+    fun `feedTo with WritableLongProperty invokes WritableLongProperty#setValue when a value is emitted`() {
+        val value = mock<WritableLongValue>()
+        val mono = MonoProcessor.create<Long>()
+
+        mono.feedTo(value)
+        mono.onNext(1L)
+
+        verify(value, times(1))
+            .value = eq(1L)
+    }
+
+    @Test
+    fun `feedTo with WritableLongProperty invokes onError when an error is emitted`() {
+        val value = mock<WritableLongValue>()
+        val onError = mock<ErrorHandler>()
+        val mono = MonoProcessor.create<Long>()
+        whenever(onError.invoke(any())).thenReturn(Unit)
+
+        mono.feedTo(value, onError)
+        mono.onError(Exception())
+
+        verify(onError, times(1))
+            .invoke(any())
+    }
+
+    @Test
+    fun `feedTo with WritableIntegerProperty invokes WritableIntegerProperty#setValue when a value is emitted`() {
+        val value = mock<WritableIntegerValue>()
+        val mono = MonoProcessor.create<Int>()
+
+        mono.feedTo(value)
+        mono.onNext(1)
+
+        verify(value, times(1))
+            .value = eq(1)
+    }
+
+    @Test
+    fun `feedTo with WritableIntegerProperty invokes onError when an error is emitted`() {
+        val value = mock<WritableIntegerValue>()
+        val onError = mock<ErrorHandler>()
+        val mono = MonoProcessor.create<Int>()
+        whenever(onError.invoke(any())).thenReturn(Unit)
+
+        mono.feedTo(value, onError)
+        mono.onError(Exception())
+
+        verify(onError, times(1))
+            .invoke(any())
+    }
+
+    @Test
+    fun `feedTo with WritableFloatProperty invokes WritableFloatProperty#setValue when a value is emitted`() {
+        val value = mock<WritableFloatValue>()
+        val mono = MonoProcessor.create<Float>()
+
+        mono.feedTo(value)
+        mono.onNext(1f)
+
+        verify(value, times(1))
+            .value = eq(1f)
+    }
+
+    @Test
+    fun `feedTo with WritableFloatProperty invokes onError when an error is emitted`() {
+        val value = mock<WritableFloatValue>()
+        val onError = mock<ErrorHandler>()
+        val mono = MonoProcessor.create<Float>()
+        whenever(onError.invoke(any())).thenReturn(Unit)
+
+        mono.feedTo(value, onError)
+        mono.onError(Exception())
+
+        verify(onError, times(1))
+            .invoke(any())
+    }
+
+    @Test
+    fun `feedTo with WritableDoubleProperty invokes WritableDoubleProperty#setValue when a value is emitted`() {
+        val value = mock<WritableDoubleValue>()
+        val mono = MonoProcessor.create<Double>()
+
+        mono.feedTo(value)
+        mono.onNext(1.0)
+
+        verify(value, times(1))
+            .value = eq(1.0)
+    }
+
+    @Test
+    fun `feedTo with WritableDoubleProperty invokes onError when an error is emitted`() {
+        val value = mock<WritableDoubleValue>()
+        val onError = mock<ErrorHandler>()
+        val mono = MonoProcessor.create<Double>()
+        whenever(onError.invoke(any())).thenReturn(Unit)
+
+        mono.feedTo(value, onError)
+        mono.onError(Exception())
+
+        verify(onError, times(1))
+            .invoke(any())
+    }
+
+    @Test
+    fun `feedTo with MonoSink invokes MonoSink#success with value onNext`() {
+        val sink = mock<MonoSink<Any>>()
+        val mono = MonoProcessor.create<Any>()
+
+        mono.feedTo(sink)
+        mono.onNext("abc")
+
+        verify(sink, times(1))
+            .success(eq("abc"))
+    }
+
+    @Test
+    fun `feedTo with MonoSink invokes MonoSink#success with no value onComplete`() {
+        val sink = mock<MonoSink<Any>>()
+        val mono = MonoProcessor.create<Any>()
+
+        mono.feedTo(sink)
+        mono.onComplete()
+
+        verify(sink, times(1))
+            .success()
+    }
+
+    @Test
+    fun `feedTo with MonoSink invokes MonoSink#error onError`() {
+        val sink = mock<MonoSink<Any>>()
+        val mono = MonoProcessor.create<Any>()
+
+        mono.feedTo(sink)
+        mono.onError(Exception())
+
+        verify(sink, times(1))
+            .error(any())
+    }
+}
