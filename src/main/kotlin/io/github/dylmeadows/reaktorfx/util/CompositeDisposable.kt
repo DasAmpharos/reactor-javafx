@@ -1,6 +1,8 @@
 package io.github.dylmeadows.reaktorfx.util
 
 import reactor.core.Disposable
+import java.util.stream.Stream
+import kotlin.streams.toList
 
 class CompositeDisposable private constructor(
     private val disposables: MutableList<Disposable>
@@ -40,4 +42,16 @@ class CompositeDisposable private constructor(
     override fun size(): Int {
         return disposables.size
     }
+}
+
+fun Stream<Disposable>.asComposite(): Disposable {
+    return toList().asComposite()
+}
+
+fun List<Disposable>.asComposite(): Disposable {
+    return CompositeDisposable.of(this)
+}
+
+fun Array<Disposable>.asComposite(): Disposable {
+    return CompositeDisposable.of(*this)
 }
