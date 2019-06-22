@@ -1,7 +1,7 @@
 package io.github.dylmeadows.reaktorfx.source
 
 import io.github.dylmeadows.reaktorfx.util.Change
-import io.github.dylmeadows.reaktorfx.util.addDisposable
+import io.github.dylmeadows.reaktorfx.observer.addDisposable
 import io.github.dylmeadows.reaktorfx.util.asComposite
 import javafx.application.Platform
 import javafx.beans.InvalidationListener

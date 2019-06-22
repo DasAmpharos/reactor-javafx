@@ -2,7 +2,7 @@ package io.github.dylmeadows.reaktorfx.source
 
 import io.github.dylmeadows.reaktorfx.util.ChangeType
 import io.github.dylmeadows.reaktorfx.util.ListChange
-import io.github.dylmeadows.reaktorfx.util.addDisposable
+import io.github.dylmeadows.reaktorfx.observer.addDisposable
 import javafx.application.Platform
 import javafx.collections.ListChangeListener
 import javafx.collections.ObservableList

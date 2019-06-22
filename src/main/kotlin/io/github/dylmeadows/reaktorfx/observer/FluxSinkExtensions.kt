@@ -1,4 +1,4 @@
-package io.github.dylmeadows.reaktorfx.util
+package io.github.dylmeadows.reaktorfx.observer
 
 import reactor.core.Disposable
 import reactor.core.publisher.FluxSink

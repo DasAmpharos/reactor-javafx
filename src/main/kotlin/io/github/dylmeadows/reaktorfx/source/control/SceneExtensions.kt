@@ -1,6 +1,6 @@
 package io.github.dylmeadows.reaktorfx.source.control
 
-import io.github.dylmeadows.reaktorfx.util.addDisposable
+import io.github.dylmeadows.reaktorfx.observer.addDisposable
 import javafx.event.Event
 import javafx.event.EventType
 import javafx.scene.Scene

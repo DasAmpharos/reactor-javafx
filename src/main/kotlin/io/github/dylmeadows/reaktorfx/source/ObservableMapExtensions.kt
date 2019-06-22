@@ -3,7 +3,7 @@ package io.github.dylmeadows.reaktorfx.source
 import io.github.dylmeadows.reaktorfx.util.ChangeType
 import io.github.dylmeadows.reaktorfx.util.KeyValuePair
 import io.github.dylmeadows.reaktorfx.util.MapChange
-import io.github.dylmeadows.reaktorfx.util.addDisposable
+import io.github.dylmeadows.reaktorfx.observer.addDisposable
 import javafx.application.Platform
 import javafx.collections.MapChangeListener
 import javafx.collections.ObservableMap

@@ -1,0 +1,32 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:$bintrayVersion"
+        classpath "info.solidsoft.gradle.pitest:gradle-pitest-plugin:$pitestVersion"
+    }
+}
+
+apply from: "gradle/kotlin.gradle"
+apply from: "gradle/bintray.gradle"
+apply from: "gradle/publishing.gradle"
+apply plugin: "info.solidsoft.pitest"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation("io.projectreactor:reactor-core:3.2.10.RELEASE")
+
+    testImplementation("org.junit.jupiter:junit-jupiter:5.5.0")
+    testImplementation("org.junit.vintage:junit-vintage-engine:5.5.0")
+    testImplementation("org.junit.platform:junit-platform-launcher:1.5.0-SNAPSHOT")
+    testImplementation("org.springframework.boot:spring-boot-starter-test:2.1.6.RELEASE")
+    testImplementation("io.projectreactor:reactor-test:3.2.10.RELEASE")
+    testImplementation("org.testfx:testfx-junit5:4.0.15-alpha")
+}
