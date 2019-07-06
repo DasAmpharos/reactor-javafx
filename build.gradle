@@ -7,7 +7,6 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "info.solidsoft.gradle.pitest:gradle-pitest-plugin:$pitest_version"
         classpath "org.jfrog.buildinfo:build-info-extractor-gradle:$artifactory_version"
-        classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4"
     }
 }
 
@@ -16,7 +15,6 @@ apply plugin: "java-library"
 apply plugin: "maven"
 apply plugin: "maven-publish"
 apply plugin: "com.jfrog.artifactory"
-apply plugin: "com.jfrog.bintray"
 
 repositories {
     mavenCentral()
@@ -51,24 +49,6 @@ publishing {
         }
     }
 }
-
-bintray {
-    user = System.getenv("BINTRAY_USER")
-    key = System.getenv("BINTRAY_KEY")
-
-    pkg {
-        name = project.name
-        vcsUrl = "https://github.com/dylmeadows/$project.name"
-        licenses = ["MIT"]
-        publications = ["mavenJava"]
-        repo = "maven"
-        version {
-            name = project.version
-            released = new Date()
-        }
-    }
-}
-
 
 artifactory {
     contextUrl = 'https://oss.jfrog.org/artifactory'
