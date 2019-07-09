@@ -22,7 +22,7 @@ repositories {
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("io.projectreactor:reactor-core:$reactor_version")
+    api("io.projectreactor:reactor-core:$reactor_version")
 
     testImplementation("org.junit.jupiter:junit-jupiter:$junit_version")
     testImplementation("org.junit.vintage:junit-vintage-engine:$junit_version")
